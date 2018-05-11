@@ -7,15 +7,34 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Picker
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+import Buses from '../constants/Buses';
+import Stops from '../constants/Stops';
+
+const now = new Date();
+
 export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      actualTime: `${now.getHours()}:${now.getMinutes()}`,
+      selectedBus: {},
+      selectedStop: {}
+    };
+  }
+
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount() {
+    console.log(this.state.actualTime);
+  }
 
   render() {
     return (
@@ -33,36 +52,34 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
+            <Text style={styles.getStartedText}>Time: {this.state.actualTime}</Text>
+            <Text style={styles.getStartedText}>waiting For: { this.state.selectedBus.name }</Text>
+            <Text style={styles.getStartedText}>You are in: { this.state.selectedStop.name }</Text>
           </View>
 
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
+          <Picker
+            selectedValue={this.state.selectedBus}
+            style={{ height: 50, width: 200 }}
+            onValueChange={(itemValue, itemIndex) => this.setState({selectedBus: itemValue})}>
+            {
+              Buses.map((bus) => <Picker.Item key={bus.id} label={bus.name} value={bus} />)
+            }
+          </Picker>
+
+          <Picker
+            selectedValue={this.state.selectedStop}
+            style={{ height: 50, width: 200 }}
+            onValueChange={(itemValue, itemIndex) => {console.log(itemValue); this.setState({selectedStop: itemValue});}}>
+            {
+              Stops.map((stop) => <Picker.Item key={stop.id} label={stop.name} value={stop} />)
+            }
+          </Picker>
+
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
     );
   }
+
 
   _maybeRenderDevelopmentModeWarning() {
     if (__DEV__) {
