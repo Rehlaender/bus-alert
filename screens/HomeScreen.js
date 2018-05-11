@@ -13,6 +13,7 @@ import {
 import { WebBrowser } from 'expo';
 
 import { Ionicons } from '@expo/vector-icons';
+
 import { MonoText } from '../components/StyledText';
 
 import Buses from '../constants/Buses';
