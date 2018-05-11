@@ -9,12 +9,16 @@ import {
   View,
   Picker
 } from 'react-native';
+
 import { WebBrowser } from 'expo';
 
+import { Ionicons } from '@expo/vector-icons';
 import { MonoText } from '../components/StyledText';
 
 import Buses from '../constants/Buses';
 import Stops from '../constants/Stops';
+
+import Colors from '../constants/Colors';
 
 const now = new Date();
 
@@ -38,8 +42,18 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, styles.mainBackground]}>
+
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
+          {/*TITLES COMPONENT*/}
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.getStartedText}>Time: {this.state.actualTime}</Text>
+            <Text style={styles.getStartedText}>waiting For: { this.state.selectedBus.name }</Text>
+            <Text style={styles.getStartedText}>You are in: { this.state.selectedStop.name }</Text>
+          </View>
+
+          {/*BUS ANIMATION COMPONENT*/}
           <View style={styles.welcomeContainer}>
             <Image
               source={
@@ -51,35 +65,31 @@ export default class HomeScreen extends React.Component {
             />
           </View>
 
+          {/*PIKCERS CONTAINER*/}
           <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>Time: {this.state.actualTime}</Text>
-            <Text style={styles.getStartedText}>waiting For: { this.state.selectedBus.name }</Text>
-            <Text style={styles.getStartedText}>You are in: { this.state.selectedStop.name }</Text>
+            <Picker
+              selectedValue={this.state.selectedBus}
+              style={{ height: 50, width: 300 }}
+              onValueChange={(itemValue, itemIndex) => this.setState({selectedBus: itemValue})}>
+              {
+                Buses.map((bus) => <Picker.Item key={bus.id} label={bus.name} value={bus} />)
+              }
+            </Picker>
+
+            <Picker
+              selectedValue={this.state.selectedStop}
+              style={{ height: 50, width: 300 }}
+              onValueChange={(itemValue, itemIndex) => {console.log(itemValue); this.setState({selectedStop: itemValue});}}>
+              {
+                Stops.map((stop) => <Picker.Item key={stop.id} label={stop.name} value={stop} />)
+              }
+            </Picker>
           </View>
-
-          <Picker
-            selectedValue={this.state.selectedBus}
-            style={{ height: 50, width: 200 }}
-            onValueChange={(itemValue, itemIndex) => this.setState({selectedBus: itemValue})}>
-            {
-              Buses.map((bus) => <Picker.Item key={bus.id} label={bus.name} value={bus} />)
-            }
-          </Picker>
-
-          <Picker
-            selectedValue={this.state.selectedStop}
-            style={{ height: 50, width: 200 }}
-            onValueChange={(itemValue, itemIndex) => {console.log(itemValue); this.setState({selectedStop: itemValue});}}>
-            {
-              Stops.map((stop) => <Picker.Item key={stop.id} label={stop.name} value={stop} />)
-            }
-          </Picker>
 
         </ScrollView>
       </View>
     );
   }
-
 
   _maybeRenderDevelopmentModeWarning() {
     if (__DEV__) {
@@ -116,9 +126,11 @@ export default class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  mainBackground: {
+    backgroundColor: Colors.lightYellow,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -129,6 +141,11 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 30,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -159,7 +176,7 @@ const styles = StyleSheet.create({
   },
   getStartedText: {
     fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
+    color: Colors.hardBlue,
     lineHeight: 24,
     textAlign: 'center',
   },
