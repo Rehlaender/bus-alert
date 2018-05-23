@@ -7,30 +7,32 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Picker
+  Picker,
+  Button
 } from 'react-native';
 
-import { WebBrowser } from 'expo';
-
 import { Ionicons } from '@expo/vector-icons';
-
 import { MonoText } from '../components/StyledText';
+
+import { Clock } from '../components/Clock';
+
+import store from '../todoStore';
 
 import Buses from '../constants/Buses';
 import Stops from '../constants/Stops';
 
 import Colors from '../constants/Colors';
 
-const now = new Date();
-
 export default class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      actualTime: `${now.getHours()}:${now.getMinutes()}`,
-      selectedBus: {},
-      selectedStop: {}
-    };
+  constructor(props, context) {
+    super(props, context);
+    this.state = store.getState();
+
+    store.subscribe(() => {
+      this.setState(store.getState());
+    });
+
+    this.toggler = this.toggler.bind(this);
   }
 
   static navigationOptions = {
@@ -38,7 +40,11 @@ export default class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.state.actualTime);
+    console.log(this.state);
+  }
+
+  toggler() {
+    store.dispatch({type: 'TOGGLE_TOGGLER'});
   }
 
   render() {
@@ -46,46 +52,16 @@ export default class HomeScreen extends React.Component {
       <View style={[styles.container, styles.mainBackground]}>
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
-          {/*TITLES COMPONENT*/}
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>Time: {this.state.actualTime}</Text>
-            <Text style={styles.getStartedText}>waiting For: { this.state.selectedBus.name }</Text>
-            <Text style={styles.getStartedText}>You are in: { this.state.selectedStop.name }</Text>
-          </View>
-
-          {/*BUS ANIMATION COMPONENT*/}
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          {/*PIKCERS CONTAINER*/}
-          <View style={styles.getStartedContainer}>
-            <Picker
-              selectedValue={this.state.selectedBus}
-              style={{ height: 50, width: 300 }}
-              onValueChange={(itemValue, itemIndex) => this.setState({selectedBus: itemValue})}>
-              {
-                Buses.map((bus) => <Picker.Item key={bus.id} label={bus.name} value={bus} />)
-              }
-            </Picker>
-
-            <Picker
-              selectedValue={this.state.selectedStop}
-              style={{ height: 50, width: 300 }}
-              onValueChange={(itemValue, itemIndex) => {console.log(itemValue); this.setState({selectedStop: itemValue});}}>
-              {
-                Stops.map((stop) => <Picker.Item key={stop.id} label={stop.name} value={stop} />)
-              }
-            </Picker>
-          </View>
+        <Button
+          onPress={this.toggler}
+          title="Learn More"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Clock />
+        <Text>{
+          this.state.isToggle ? 'Lel': 'not lel'
+        }</Text>
 
         </ScrollView>
       </View>
