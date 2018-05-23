@@ -15,6 +15,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { MonoText } from '../components/StyledText';
 
 import { Clock } from '../components/Clock';
+import { ChangeBus } from '../components/ChangeBus';
+import { ChangeStop } from '../components/ChangeStop';
 
 import store from '../todoStore';
 
@@ -40,7 +42,7 @@ export default class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.state);
+    console.log(this.state.waitingBus.name, 'leeel');
   }
 
   toggler() {
@@ -50,19 +52,15 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={[styles.container, styles.mainBackground]}>
-
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Button
-          onPress={this.toggler}
-          title="Learn More"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />
         <Clock />
-        <Text>{
-          this.state.isToggle ? 'Lel': 'not lel'
-        }</Text>
-
+        <Text>{this.state.waitingBusId}, {this.state.waitingStopId} ;D</Text>
+        <View style={styles.changeBusContainer}>
+          { this.state.buses.length > 0 ? <ChangeBus waitingBusId={this.state.waitingBusId} buses={this.state.buses}/> : ''}
+        </View>
+        <View style={styles.changeStopContainer}>
+          { this.state.stops.length > 0 ? <ChangeStop waitingStopId={this.state.waitingStopId} stops={this.state.stops}/> : ''}
+        </View>
         </ScrollView>
       </View>
     );
@@ -105,6 +103,25 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   mainBackground: {
     backgroundColor: Colors.lightYellow,
+  },
+  bottomContainer: {
+    flex: 3,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  changeBusContainer: {
+    bottom: 0,
+    position: 'absolute',
+    left: 0,
+    width: '50%'
+  },
+  changeStopContainer: {
+    bottom: 0,
+    position: 'absolute',
+    right: 0,
+    width: '50%'
   },
   container: {
     flex: 1,

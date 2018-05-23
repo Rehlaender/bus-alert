@@ -12,7 +12,7 @@ export default [
     time: "4:07",
     stop: 1,
     bus: 1
-  }
+  },
   {
     id: 3,
     name: "85 llega a san nico",

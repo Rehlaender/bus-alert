@@ -8,19 +8,11 @@ import {
   Picker,
 } from 'react-native';
 
-export class ChangeBus extends React.Component {
+export class ChangeStop extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      selectedBus: {
-        id: 10,
-        name: 'ejk',
-      },
     };
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(prevProps, prevState, 'asdfu did');
   }
 
   componentWillUpdate(prevProps, prevState, snapshot) {
@@ -33,14 +25,13 @@ export class ChangeBus extends React.Component {
   render() {
     return (
         <Picker
-          selectedValue={this.props.waitingBusId}
+          selectedValue={this.props.waitingStopId}
           style={{ height: 50, width: 300 }}
-          onValueChange={(bus, itemIndex) => store.dispatch({type: 'CHANGE_WAITING_BUS_ID', bus})}>
+          onValueChange={(stop, itemIndex) => store.dispatch({type: 'CHANGE_WAITING_STOP_ID', stop})}>
               {
-                this.props.buses.map((bus) => <Picker.Item key={bus.id} label={bus.name} value={bus.id} />)
+                this.props.stops.map((stop) => <Picker.Item key={stop.id} label={stop.name} value={stop.id} />)
               }
         </Picker>
-      
     );
   }
 }
@@ -77,7 +68,7 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   getStartedContainer: {
-    backgroundColor: 'green',
+    backgroundColor: 'blue',
     flex: 2,
   },
   homeScreenFilename: {
