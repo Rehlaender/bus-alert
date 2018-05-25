@@ -29,7 +29,12 @@ export class Clock extends React.Component {
     const nowHours = now.getHours();
     const nowMinutes = now.getMinutes();
     const nowSeconds = now.getSeconds();
-    const newer = `${nowHours}:${nowMinutes}:${nowSeconds}`
+    const newer = {
+        hours: nowHours,
+        minutes: nowMinutes,
+        seconds: nowSeconds,
+        actualTime: `${nowHours}:${nowMinutes}:${nowSeconds}`
+    };
     return newer;
   }
 

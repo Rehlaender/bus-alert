@@ -12,17 +12,20 @@ const defaultState = {
   ],
   isToggle: true,
   actualTime: '00:00:00',
+  actualHours: 0,
+  actualMinutes: 0,
+  actualSeconds: 0,
   waitingBus: {
-    id: 10,
-    name: "el 10"
+    ...Buses[0]
   },
-  waitingBusId: 10,
-  waitingStopId: 10,
+  waitingBusId: 1,
+  waitingStopId: 1,
   waitingStop: {
-      id: 10,
-      lat: "10",
-      lon: "10",
-      name: "la parada 10"
+      ...Stops[0]
+  },
+  waitingRouteId: 1,
+  waitingRoute: {
+      ...Routes[0]
   },
   buses: [
     ...Buses
@@ -35,18 +38,55 @@ const defaultState = {
   ],
 }
 
+function returnBusById(buses, busId) {
+  const busObject = buses.filter(( bus ) => {
+    return bus.id === busId;
+  });
+  return busObject[0];
+}
+
+function returnRouteById(routes, routeId) {
+  const routeObject = routes.filter(( route ) => {
+    return route.id === routeId;
+  });
+  return routeObject[0];
+}
+
+function returnStopById(stops, stopId) {
+  const stopObject = stops.filter(( stop ) => {
+    return stop.id === stopId;
+  });
+  return stopObject[0];
+}
+
+function returnRoutesByBusId(stops, busId) {
+  const filteredStops = stops.filter(( stop ) => {
+    return stop.busId === busId;
+  });
+  return filteredStops;
+}
+
 function todoStore(state = defaultState, action) {
   switch (action.type) {
     case 'CHANGE_WAITING_BUS_ID':
-      console.log(action.bus, 'dispatch id');
+      const waitingBus = returnBusById(state.buses, action.bus);
       return Object.assign({}, state, {
-        waitingBusId: action.bus
+        waitingBusId: action.bus,
+        waitingBus
       });
       break;
     case 'CHANGE_WAITING_STOP_ID':
-      console.log(action.stop, 'dispatch id');
+      const waitingStop = returnStopById(state.stops, action.stop);
       return Object.assign({}, state, {
-        waitingStopId: action.stop
+        waitingStopId: action.stop,
+        waitingStop
+      });
+      break;
+    case 'CHANGE_WAITING_ROUTE_ID':
+      const waitingRoute = returnRouteById(state.routes, action.route);
+      return Object.assign({}, state, {
+        waitingRouteId: action.route,
+        waitingRoute
       });
       break;
     case 'ADD_TODO':
@@ -58,7 +98,10 @@ function todoStore(state = defaultState, action) {
       break;
     case 'TIC_TIMER':
       return Object.assign({}, state, {
-        actualTime: action.now
+        actualTime: action.now.actualTime,
+        actualHours: action.now.hours,
+        actualMinutes: action.now.minutes,
+        actualSeconds: action.now.seconds
       });
       break;
     case 'TOGGLE_TOGGLER':

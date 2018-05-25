@@ -11,4 +11,10 @@ export default [
     lon: "123",
     name: "San Nico"
   },
+  {
+    id: 3,
+    lat: "123",
+    lon: "123",
+    name: "Centro"
+  }
 ];

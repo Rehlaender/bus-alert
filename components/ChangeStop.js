@@ -16,7 +16,7 @@ export class ChangeStop extends React.Component {
   }
 
   componentWillUpdate(prevProps, prevState, snapshot) {
-    console.log(prevProps, prevState, 'asdfu will');
+    // console.log(prevProps, prevState, 'asdfu will');
   }
 
   componentDidMount() {
@@ -24,14 +24,17 @@ export class ChangeStop extends React.Component {
 
   render() {
     return (
-        <Picker
-          selectedValue={this.props.waitingStopId}
-          style={{ height: 50, width: 300 }}
-          onValueChange={(stop, itemIndex) => store.dispatch({type: 'CHANGE_WAITING_STOP_ID', stop})}>
-              {
-                this.props.stops.map((stop) => <Picker.Item key={stop.id} label={stop.name} value={stop.id} />)
-              }
-        </Picker>
+        <View>
+          <Text>Paradas</Text>
+          <Picker
+            selectedValue={this.props.waitingStopId}
+            style={{ height: 50, width: 300 }}
+            onValueChange={(stop, itemIndex) => store.dispatch({type: 'CHANGE_WAITING_STOP_ID', stop})}>
+                {
+                  this.props.stops.map((stop) => <Picker.Item key={stop.id} label={stop.name} value={stop.id} />)
+                }
+          </Picker>
+        </View>
     );
   }
 }

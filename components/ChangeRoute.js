@@ -8,38 +8,22 @@ import {
   Picker,
 } from 'react-native';
 
-export class ChangeBus extends React.Component {
+export class ChangeRoute extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      selectedBus: {
-        id: 10,
-        name: 'ejk',
-      },
-    };
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // console.log(prevProps, prevState, 'asdfu did');
-  }
-
-  componentWillUpdate(prevProps, prevState, snapshot) {
-    // console.log(prevProps, prevState, 'asdfu will');
-  }
-
-  componentDidMount() {
+    this.state = {};
   }
 
   render() {
     return (
       <View>
-        <Text>Camión:</Text>
+        <Text>Rutas:</Text>
         <Picker
-          selectedValue={this.props.waitingBusId}
+          selectedValue={this.props.waitingRouteId}
           style={{ height: 50, width: 300 }}
-          onValueChange={(bus, itemIndex) => store.dispatch({type: 'CHANGE_WAITING_BUS_ID', bus})}>
+          onValueChange={(route, itemIndex) => store.dispatch({type: 'CHANGE_WAITING_ROUTE_ID', route})}>
               {
-                this.props.buses.map((bus) => <Picker.Item key={bus.id} label={bus.name} value={bus.id} />)
+                this.props.routes.map((route) => <Picker.Item key={route.id} label={route.name} value={route.id} />)
               }
         </Picker>
       </View>

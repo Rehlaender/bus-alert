@@ -16,7 +16,10 @@ import { MonoText } from '../components/StyledText';
 
 import { Clock } from '../components/Clock';
 import { ChangeBus } from '../components/ChangeBus';
+
+import { ChangeRoute } from '../components/ChangeRoute';
 import { ChangeStop } from '../components/ChangeStop';
+import { WhereIsBus } from '../components/WhereIsBus';
 
 import store from '../todoStore';
 
@@ -35,6 +38,7 @@ export default class HomeScreen extends React.Component {
     });
 
     this.toggler = this.toggler.bind(this);
+    this.returnBusById = this.returnBusById.bind(this);
   }
 
   static navigationOptions = {
@@ -42,25 +46,41 @@ export default class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.state.waitingBus.name, 'leeel');
+    // console.log(this.state.waitingBus.name, 'leeel');
   }
 
   toggler() {
     store.dispatch({type: 'TOGGLE_TOGGLER'});
   }
 
+  returnBusById() {
+    const buses = this.state.buses;
+    const busId = this.state.waitingBusId;
+    const busObject = buses.filter(( bus ) => {
+      return bus.id === busId;
+    });
+    return busObject;
+  }
+
+  // changeById(waitingStopId) {
+  //   const stops = this.props.stops;
+  //   const stopId = waitingStopId;
+  //   const stopObject = stops.filter(( stop ) => {
+  //     return stop.id === stopId;
+  //   });
+  //   return stopObject;
+  // }
+
   render() {
     return (
       <View style={[styles.container, styles.mainBackground]}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Clock />
-        <Text>{this.state.waitingBusId}, {this.state.waitingStopId} ;D</Text>
-        <View style={styles.changeBusContainer}>
-          { this.state.buses.length > 0 ? <ChangeBus waitingBusId={this.state.waitingBusId} buses={this.state.buses}/> : ''}
-        </View>
-        <View style={styles.changeStopContainer}>
-          { this.state.stops.length > 0 ? <ChangeStop waitingStopId={this.state.waitingStopId} stops={this.state.stops}/> : ''}
-        </View>
+          <Clock />
+          <View>
+            { this.state.buses.length > 0 ? <ChangeBus waitingBusId={this.state.waitingBusId} buses={this.state.buses}/> : ''}
+            { this.state.routes.length > 0 ? <ChangeRoute waitingRouteId={this.state.waitingRouteId} routes={this.state.routes}/> : ''}
+            { this.state.stops.length > 0 ? <ChangeStop waitingStopId={this.state.waitingStopId} stops={this.state.stops}/> : ''}
+          </View>
         </ScrollView>
       </View>
     );
