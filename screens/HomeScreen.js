@@ -62,20 +62,24 @@ export default class HomeScreen extends React.Component {
     return busObject;
   }
 
-  // changeById(waitingStopId) {
-  //   const stops = this.props.stops;
-  //   const stopId = waitingStopId;
-  //   const stopObject = stops.filter(( stop ) => {
-  //     return stop.id === stopId;
-  //   });
-  //   return stopObject;
-  // }
-
   render() {
     return (
       <View style={[styles.container, styles.mainBackground]}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <Clock />
+          <View style={styles.welcomeContainer}>
+            <Image
+                source={
+                    require('../assets/images/logo_uanl.png')
+                }
+                style={styles.welcomeImage}
+                />
+          {
+            (this.state.nearestStop.name != this.state.waitingStop.name) ? (
+            <Text style={styles.bigFont}>Tu camión está por: {this.state.nearestStop.name}, pronto llegará a tu parada</Text> ) :
+            (<Text style={styles.bigFont}>Tu camión ya está aquí. Súbete!!</Text>)
+          }
+          </View>
           <View>
             { this.state.buses.length > 0 ? <ChangeBus waitingBusId={this.state.waitingBusId} buses={this.state.buses}/> : ''}
             { this.state.routes.length > 0 ? <ChangeRoute waitingRouteId={this.state.waitingRouteId} routes={this.state.routes}/> : ''}
@@ -171,6 +175,7 @@ const styles = StyleSheet.create({
     height: 80,
     resizeMode: 'contain',
     marginTop: 3,
+    marginBottom: 5,
     marginLeft: -10,
   },
   getStartedContainer: {
@@ -233,4 +238,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  bigFont: {
+    marginTop: 3,
+    fontSize: 20,
+    textAlign: 'center',
+  }
 });

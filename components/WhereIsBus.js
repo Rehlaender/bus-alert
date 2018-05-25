@@ -12,6 +12,7 @@ export class WhereIsBus extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      busNearStop: ''
     };
   }
 
@@ -23,7 +24,7 @@ export class WhereIsBus extends React.Component {
     return (
         <View>
           <Text>
-            lel -> waiting this guy {this.props.waitingBus.id - this.props.waitingBus.name}
+            El camión {this.props.waitingBus.name } se encuentra cerca de la parada {}
           </Text>
         </View>
     );

@@ -36,6 +36,9 @@ const defaultState = {
   routes: [
     ...Routes
   ],
+  nearestStop: {
+    ...Stops[0]
+  }
 }
 
 function returnBusById(buses, busId) {
@@ -59,11 +62,25 @@ function returnStopById(stops, stopId) {
   return stopObject[0];
 }
 
-function returnRoutesByBusId(stops, busId) {
-  const filteredStops = stops.filter(( stop ) => {
+function returnRoutesByBusId(busStops, busId) {
+  const stops = busStops.filter(( stop ) => {
     return stop.busId === busId;
   });
-  return filteredStops;
+  return stops;
+}
+
+function returnStopNearBusAccordingTime(stops, actualStop, actualRoute, actualBus, time) {
+  let nearestStopId = actualRoute.stops.filter(stop => {
+    return toString(stop.time.hour) === toString(time.hours);
+  });
+
+  let thisStop = stops.filter(stop => {
+    return stop.id === nearestStopId[0].stop;
+  });
+
+  let nearestStop = thisStop[0];
+  console.log(nearestStop.name,'nearestStop');
+  return nearestStop;
 }
 
 function todoStore(state = defaultState, action) {
@@ -97,11 +114,13 @@ function todoStore(state = defaultState, action) {
       });
       break;
     case 'TIC_TIMER':
+      const nearestStop = returnStopNearBusAccordingTime(state.stops, state.waitingStop, state.waitingRoute, state.waitingBus, action.now);
       return Object.assign({}, state, {
         actualTime: action.now.actualTime,
         actualHours: action.now.hours,
         actualMinutes: action.now.minutes,
-        actualSeconds: action.now.seconds
+        actualSeconds: action.now.seconds,
+        nearestStop
       });
       break;
     case 'TOGGLE_TOGGLER':

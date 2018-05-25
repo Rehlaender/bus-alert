@@ -6,15 +6,15 @@ export default [
     stops: [
       {
         time: {
-          hour: '13',
+          hour: '1',
           minutes: '0',
           seconds: '0'
         },
-        stop: 1,
+        stop: 2,
       },
       {
         time: {
-          hour: '13',
+          hour: '14',
           minutes: '2',
           seconds: '0'
         },
@@ -22,7 +22,7 @@ export default [
       },
       {
         time: {
-          hour: '13',
+          hour: '15',
           minutes: '4',
           seconds: '0'
         },
@@ -30,7 +30,7 @@ export default [
       },
       {
         time: {
-          hour: '13',
+          hour: '16',
           minutes: '6',
           seconds: '0'
         },
@@ -38,7 +38,7 @@ export default [
       },
       {
         time: {
-          hour: '13',
+          hour: '17',
           minutes: '8',
           seconds: '0'
         },
@@ -61,7 +61,7 @@ export default [
       },
       {
         time: {
-          hour: '13',
+          hour: '14',
           minutes: '32',
           seconds: '0'
         },
@@ -69,7 +69,7 @@ export default [
       },
       {
         time: {
-          hour: '13',
+          hour: '15',
           minutes: '34',
           seconds: '0'
         },
@@ -77,7 +77,7 @@ export default [
       },
       {
         time: {
-          hour: '13',
+          hour: '15',
           minutes: '36',
           seconds: '0'
         },
@@ -85,12 +85,105 @@ export default [
       },
       {
         time: {
-          hour: '13',
+          hour: '16',
           minutes: '38',
           seconds: '0'
         },
         stop: 1,
       }
+    ]
+  },
+  {
+    id: 3,
+    name: "85 de la uni al centro",
+    bus: 1,
+    stops: [
+      {
+        time: {
+          hour: '0',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 1,
+      },
+      {
+        time: {
+          hour: '1',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 2,
+      },
+      {
+        time: {
+          hour: '2',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 3,
+      },
+      {
+        time: {
+          hour: '3',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 2,
+      },
+      {
+        time: {
+          hour: '4',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 1,
+      },
+      {
+        time: {
+          hour: '5',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 2,
+      },
+      {
+        time: {
+          hour: '6',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 3,
+      },{
+        time: {
+          hour: '7',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 2,
+      },{
+        time: {
+          hour: '8',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 1,
+      },
+      {
+        time: {
+          hour: '16',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 2,
+      },
+      {
+        time: {
+          hour: '8',
+          minutes: '0',
+          seconds: '0'
+        },
+        stop: 1,
+      },
     ]
   },
 ];
